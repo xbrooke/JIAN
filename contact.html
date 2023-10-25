@@ -99,7 +99,7 @@
                             <li class="nav__item"><a href="resume.html"><i class="icon-file-text"></i>经历</a></li>
                             <li class="nav__item"><a href="works.html"><i class="icon-codesandbox"></i>项目</a></li>
                             <li class="nav__item"><a href="blog.html"><i class="icon-book-open"></i>博客</a></li>
-                            <li class="nav__item"><a class="active" href="contact.html"><i class="icon-book"></i>联系</a></li>
+                            <li class="nav__item"><a class="active" href="contact.html"><i class="icon-book"></i>留言板</a></li>
                         </ul>
                     </div>
                 </aside>
@@ -108,66 +108,25 @@
                 <div class="col-12 col-md-12 col-lg-10">
                     <div class="box box-content">
                         <div class="pb-2">
-                            <h1 class="title title--h1 first-title title__separate">联系</h1>
+                            <h1 class="title title--h1 first-title title__separate">留言板</h1>
                         </div>
-
-                        <!-- 联系表单 -->
-                        <h2 class="title title--h3">联系表单</h2>
-						<form id="my-form"  class="contact-form" action="https://formspree.io/f/xzbloakb" method="POST">
-							<div class="form-group col-12 col-md-6">
-								<input type="email" class="form-control" id="emailContact" name="emailContact" placeholder="电子邮件地址" required="required" autocomplete="on" oninvalid="setCustomValidity('电子邮件格式不正确')" onkeyup="setCustomValidity('')">
-								<div class="help-block with-errors"></div>
-							  </div>
-							  <div class="form-group col-12 col-md-12">
-								<textarea class="textarea form-control" id="messageContact" name="messageContact" placeholder="您的消息"  rows="4" required="required" oninvalid="setCustomValidity('请填写此字段')" onkeyup="setCustomValidity('')"></textarea>
-								<div class="help-block with-errors"></div>
-							  </div>
-							  <div class="row">
-								<div class="col-12 col-md-6 order-2 order-md-1 text-center text-md-left">
-								  <div id="validator-contact" class="hidden"></div>
-								</div>
-								<div class="col-12 col-md-6 order-1 order-md-2 text-right">
-								  <button id="my-form-button"class="btn"><i class="font-icon icon-send"></i> 发送消息</button>
-								</div>
-							  </div>
-							<p id="my-form-status" class="title title--h3"></p>
-						  </form>
-						  <!-- Place this script at the end of the body tag -->
-						  <script>
-							  var form = document.getElementById("my-form");
-							  
-							  async function handleSubmit(event) {
-								event.preventDefault();
-								var status = document.getElementById("my-form-status");
-								var data = new FormData(event.target);
-								fetch(event.target.action, {
-								  method: form.method,
-								  body: data,
-								  headers: {
-									  'Accept': 'application/json'
-								  }
-								}).then(response => {
-								  if (response.ok) {
-									status.innerHTML = "已经成功提交!";
-									form.reset()
-								  } else {
-									response.json().then(data => {
-									  if (Object.hasOwn(data, 'errors')) {
-										status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
-									  } else {
-										status.innerHTML = "糟糕！提交表单时出现问题"
-									  }
-									})
-								  }
-								}).catch(error => {
-								  status.innerHTML = "糟糕！提交表单时出现问题"
-								});
-							  }
-							  form.addEventListener("submit", handleSubmit)
-						  </script>
-
-                       			  
-                    </div>
+						<script src="https://giscus.app/client.js"
+						data-repo="xbrooke/jians"
+						data-repo-id="R_kgDOKk3Qgg"
+						data-category="Q&A"
+						data-category-id="DIC_kwDOKk3Qgs4CabLp"
+						data-mapping="pathname"
+						data-strict="0"
+						data-reactions-enabled="1"
+						data-emit-metadata="0"
+						data-input-position="bottom"
+						data-theme="light"
+						data-lang="zh-CN"
+						data-loading="lazy"
+						crossorigin="anonymous"
+						async>
+				</script>
+                        
                     
                     <!-- 页脚 -->
                     <footer class="footer">© 2020 vCard</footer>
