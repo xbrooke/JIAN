@@ -113,14 +113,8 @@
 
                         <!-- 联系表单 -->
                         <h2 class="title title--h3">联系表单</h2>
-                            
-                        <form id="contact-form" class="contact-form" method="post" action="https://formspree.io/f/xzbloakb">
-							<div class="row">
-							  <div class="form-group col-12 col-md-6">
-								<input type="text" class="form-control" id="nameContact" name="nameContact" placeholder="全名" required="required" autocomplete="on" oninvalid="setCustomValidity('请填写此字段')" onkeyup="setCustomValidity('')">
-								<div class="help-block with-errors"></div>
-							  </div>
-							  <div class="form-group col-12 col-md-6">
+						<form id="my-form"  class="contact-form" action="https://formspree.io/f/xzbloakb" method="POST">
+							<div class="form-group col-12 col-md-6">
 								<input type="email" class="form-control" id="emailContact" name="emailContact" placeholder="电子邮件地址" required="required" autocomplete="on" oninvalid="setCustomValidity('电子邮件格式不正确')" onkeyup="setCustomValidity('')">
 								<div class="help-block with-errors"></div>
 							  </div>
@@ -128,16 +122,51 @@
 								<textarea class="textarea form-control" id="messageContact" name="messageContact" placeholder="您的消息"  rows="4" required="required" oninvalid="setCustomValidity('请填写此字段')" onkeyup="setCustomValidity('')"></textarea>
 								<div class="help-block with-errors"></div>
 							  </div>
-							</div>
-							<div class="row">
-							  <div class="col-12 col-md-6 order-2 order-md-1 text-center text-md-left">
-								<div id="validator-contact" class="hidden"></div>
+							  <div class="row">
+								<div class="col-12 col-md-6 order-2 order-md-1 text-center text-md-left">
+								  <div id="validator-contact" class="hidden"></div>
+								</div>
+								<div class="col-12 col-md-6 order-1 order-md-2 text-right">
+								  <button id="my-form-button"class="btn"><i class="font-icon icon-send"></i> 发送消息</button>
+								</div>
 							  </div>
-							  <div class="col-12 col-md-6 order-1 order-md-2 text-right">
-								<button type="submit" class="btn"><i class="font-icon icon-send"></i> 发送消息</button>
-							  </div>
-							</div>
-						  </form>					  
+							<p id="my-form-status" class="title title--h3"></p>
+						  </form>
+						  <!-- Place this script at the end of the body tag -->
+						  <script>
+							  var form = document.getElementById("my-form");
+							  
+							  async function handleSubmit(event) {
+								event.preventDefault();
+								var status = document.getElementById("my-form-status");
+								var data = new FormData(event.target);
+								fetch(event.target.action, {
+								  method: form.method,
+								  body: data,
+								  headers: {
+									  'Accept': 'application/json'
+								  }
+								}).then(response => {
+								  if (response.ok) {
+									status.innerHTML = "已经成功提交!";
+									form.reset()
+								  } else {
+									response.json().then(data => {
+									  if (Object.hasOwn(data, 'errors')) {
+										status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
+									  } else {
+										status.innerHTML = "糟糕！提交表单时出现问题"
+									  }
+									})
+								  }
+								}).catch(error => {
+								  status.innerHTML = "糟糕！提交表单时出现问题"
+								});
+							  }
+							  form.addEventListener("submit", handleSubmit)
+						  </script>
+
+                       			  
                     </div>
                     
                     <!-- 页脚 -->
